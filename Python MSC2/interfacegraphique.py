@@ -14,15 +14,15 @@ from scipy import misc
 import Tkinter, tkFileDialog #selectione le repertoire de fichiers d'entree
 root = Tkinter.Tk()
 root.withdraw()
-repertoire = tkFileDialog.askdirectory(parent=root,initialdir="/home/raul/Bureau/Experiences",title='Selectionez le repertoire M. Chaussette')
+repertoire = tkFileDialog.askdirectory(parent=root,initialdir="/home/raul/Desktop/Experiences",title='Selectionez le repertoire M. Chaussette')
 
 
 X = numpy.load(repertoire+'/X.npy')
 Y = numpy.load(repertoire+'/Y.npy')
-V = ( (X[301:]- X[300:-1])**2 + (Y[301:]- Y[300:-1])**2 )**0.5 
-trace = numpy.zeros((misc.imread(repertoire+'/image.jpg').shape))
+V = ( (X[1:]- X[:-1])**2 + (Y[1:]- Y[:-1])**2 )**0.5 
+trace = numpy.zeros((misc.imread(repertoire+'/image0.jpg').shape))
 
-dt = 1
+dt = 100
 
 class SubplotAnimation(animation.TimedAnimation):
     def __init__(self):

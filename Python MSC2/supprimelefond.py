@@ -16,7 +16,7 @@ fichiers = [os.path.join(repertoire, f) for f in sorted(os.listdir(repertoire))]
 
 
 sortie = repertoire + '/../Propre'
-#os.makedirs(repertoire + '/../Propre')
+if not(os.path.exists(sortie)): os.makedirs(sortie)
 
 '''root = Tkinter.Tk()
 root.withdraw()
@@ -25,8 +25,9 @@ Fond = Image.open(fichfond)
 '''
 
 
-def temps(stringTM):
-    return int(str.split(str.split(str.split(stringTM, '/')[-1], '.')[0], '-')[1])*1000*1000000 + int(str.split(str.split(str.split(stringTM, '/')[-1], '.')[0], '-')[2])*1000 + int(str.split(str.split(str.split(stringTM, '/')[-1], '.')[0], '-')[3])
+def temps(stringTM): #attention au changement de mois
+    date = str.split(str.split(stringTM, '/')[-1], '.')[0]
+    return int(date[16:19]) + 1000*( int(date[13:15]) + 60*( int(date[11:13]) + 60*( int(date[9:11]) + 24*int(date[6:8]) ) ) )
     
     
 def fond(premiere, derniere, pas=1):
@@ -39,17 +40,16 @@ def fond(premiere, derniere, pas=1):
 
     
 
-t0 = temps(fichiers[0])
+n0 = 650
 
-Fond = fond(606,3180,100)
-for n,f in enumerate(fichiers[604:3180]):
-    ImageChops.difference(Fond, Image.open(f)).save(sortie+'/'+str(temps(f) - t0)+'.jpg')
+t0 = temps(fichiers[n0])
+
+Fond = fond(n0,n0+10000,100)
     
 
-for n,f in enumerate(fichiers[3180:]):
-    if n%3026 == 0:
-        Fond = fond(n+3180+26,n+3000+3180,100)
+for n,f in enumerate(fichiers[n0:]):
+    if (n+1+n0)%10000==0:    
+        Fond = fond(n+n0,n+n0+10000,100)
+    
     ImageChops.difference(Fond, Image.open(f)).save(sortie+'/'+str(temps(f) - t0)+'.jpg')
     
-
-

@@ -6,7 +6,7 @@ Created on Thu Mar  5 15:19:36 2015
 """
 import numpy
 from scipy import misc
-
+import shutil
 
 import Tkinter, tkFileDialog, os #selectione le repertoire de fichiers d'entree
 root = Tkinter.Tk()
@@ -14,11 +14,8 @@ root.withdraw()
 repertoire = tkFileDialog.askdirectory(parent=root,initialdir="/home/raul/Desktop",title='Selectionez le repertoire M. Chaussette')
 fichiers = [os.path.join(repertoire, f) for f in sorted(os.listdir(repertoire))]
 
-import shutil #cree le repertoire de sortie, vide l'ancien si besoin
 sortie = repertoire + '/../Barycentre'
-#if os.path.exists(repertoire + '/../Barycentre'): shutil.rmtree(repertoire + '/../Barycentre')
-#os.makedirs(repertoire + '/../Barycentre')
-
+if not(os.path.exists(sortie)): os.makedirs(sortie)
 
 
 def barycentre(image):
@@ -30,15 +27,13 @@ def barycentre(image):
 
 
 image = misc.imread(fichiers[1])
-trace = numpy.zeros(image.shape) 
 X = []
 Y = []
 
-for i,f in enumerate(fichiers[:14671]):
-    x,y = barycentre(misc.imread(f) > 29)
+for i,f in enumerate(fichiers):
+    x,y = barycentre(misc.imread(f) > 34)
     X+=[x]
     Y+=[y]
-    trace[int(y),int(x)] = 1
     if i%1000 == 0:
         print i 
     

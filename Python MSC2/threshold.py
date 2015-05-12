@@ -25,8 +25,9 @@ root.withdraw()
 fichfond = tkFileDialog.askopenfilename(parent=root,initialdir="/home/raul/Desktop/Experiences",title='Selectionez le fond M. Chaussette')
 Fond = Image.open(fichfond)
 
-def temps(stringTM):
-    return int(str.split(str.split(str.split(stringTM, '/')[-1], '.')[0], '-')[1])*1000*1000000 + int(str.split(str.split(str.split(stringTM, '/')[-1], '.')[0], '-')[2])*1000 + int(str.split(str.split(str.split(stringTM, '/')[-1], '.')[0], '-')[3])
+def temps(stringTM): #attention au changement de mois
+    date = str.split(str.split(stringTM, '/')[-1], '.')[0]
+    return int(date[16:19]) + 1000*( int(date[13:15]) + 60*( int(date[11:13]) + 60*( int(date[9:11]) + 24*int(date[6:8]) ) ) )
     
 
 t0 = temps(fichiers[0])
