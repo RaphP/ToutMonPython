@@ -15,9 +15,9 @@ root = Tkinter.Tk()
 root.withdraw()
 repertoire = tkFileDialog.askdirectory(parent=root,initialdir="/home/raphael/Bureau",title='Selectionez le repertoire Images M. Chaussette')
 fichiers = [os.path.join(repertoire, f) for f in sorted(os.listdir(repertoire))]
-X = numpy.load(repertoire+'/../Barycentre/X.npy')
-Y = numpy.load(repertoire+'/../Barycentre/Y.npy')
-V = ( (X[301:]- X[300:-1])**2 + (Y[301:]- Y[300:-1])**2 )**0.5 
+X = numpy.load(repertoire+'/../position/X.npy')
+Y = numpy.load(repertoire+'/../position/Y.npy')
+V = ( (X[1:]- X[:-1])**2 + (Y[:1]- Y[:-1])**2 )**0.5 
 
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111)
@@ -85,4 +85,5 @@ def onclick2(event):
 
         
 cid2 = fig1.canvas.mpl_connect('key_press_event', onclick2)
+plt.show()
 
